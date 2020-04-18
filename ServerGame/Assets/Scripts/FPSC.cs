@@ -33,6 +33,7 @@ public class FPSC : MonoBehaviour
 				sh.StopAllCoroutines();
 				sh.server.issue = false;
 				sh.count = true;
+				sh.point++;
 			}
 		}
 	}

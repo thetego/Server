@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ServerHub : MonoBehaviour
 {
@@ -9,8 +11,9 @@ public class ServerHub : MonoBehaviour
 	public MeshRenderer mr;
 	public float timer;
 	public Server server;
-	public int index;
+	public int index, mistake, point;
 	public bool count;
+	public Text pointtxt, mistaketxt;
 
 	private void Awake()
 	{
@@ -22,7 +25,12 @@ public class ServerHub : MonoBehaviour
 	}
 	private void Update()
 	{
-
+		pointtxt.text = "Score: " + point.ToString();
+		mistaketxt.text = "Mistake: " + mistake.ToString();
+		if (mistake >= 5)
+		{
+			SceneManager.LoadScene(0);
+		}
 		if (count)
 		{
 			timer += Time.deltaTime;
@@ -36,12 +44,12 @@ public class ServerHub : MonoBehaviour
 			server.issue = true;
 			StartCoroutine(Wait());
 		}
-
-		IEnumerator Wait()
-		{
-			yield return new WaitForSeconds(2.5f);
-			server.issue = false;
-			count = true;
-		}
+	}
+	IEnumerator Wait()
+	{
+		yield return new WaitForSeconds(2.5f);
+		server.issue = false;
+		count = true;
+		mistake++;
 	}
 }
